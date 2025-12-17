@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compteur'),
+        title: Text('Compteur', style: TextStyle(fontSize: 30),),
         centerTitle: true,
         backgroundColor: widget.isDark? Colors.deepPurple : Colors.blueAccent 
       ),
@@ -48,12 +48,12 @@ class _HomePageState extends State<HomePage>{
           Text(
             'Compteur :',
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               color: widget.isDark? Colors.deepPurple : Colors.blueAccent),
           ),
           SizedBox(height: 15),
           Text('$counter', style: TextStyle(fontSize: 30)),
-          SizedBox(height: 15),
+          SizedBox(height: 30),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(child: Text('+1'),
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage>{
             ElevatedButton(child: Text('-5'),
             onPressed: ()=> incrementCounter(-5),),
           ],),
-          SizedBox(height: 15),
+          SizedBox(height: 50),
           ElevatedButton(child: Text('Ajouter score'), onPressed: () => addScore())
         ],
       ),

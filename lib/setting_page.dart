@@ -26,12 +26,13 @@ class SettingPage extends StatelessWidget {
             isDark ? Colors.deepPurple : Colors.blueAccent,
       ),
       body: Center(
-        child: Column(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: onToggleTheme,
               child: Text(isDark ? 'Passer au mode clair' : 'Passer au mode sombre'),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: clearScores,
               child: Text('Effacer l\'historique des scores')
