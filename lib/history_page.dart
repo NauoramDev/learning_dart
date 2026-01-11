@@ -34,8 +34,10 @@ class _HistoryPageState extends State<HistoryPage> {
                 final entry = widget.scores[reversedIndex];
                 final value = entry.$1;
                 final date = entry.$2;
+                final hours = date.hour > 9 ? '${date.hour}' : '0${date.hour}';
+                final minutes = date.minute > 9 ? '${date.minute}' : '0${date.minute}';
                 String formattedDay =
-                    '${date.day}/${date.month}/${date.year} - ${date.hour}:${date.minute}';
+                    '${date.day}/${date.month}/${date.year} - $hours:$minutes';
 
                 return ListTile(
                   leading: Icon(Icons.arrow_forward),

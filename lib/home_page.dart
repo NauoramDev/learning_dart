@@ -5,10 +5,15 @@ import './setting_page.dart';
 class HomePage extends StatefulWidget{
   final bool isDark;
   final VoidCallback onToggleTheme;
+  final Future<void> Function() saveScores;
+  final List<(int, DateTime)> scores;
+
   const HomePage({
     super.key,
     required this.isDark,
-    required this.onToggleTheme
+    required this.onToggleTheme,
+    required this.saveScores,
+    required this.scores,
   });
   
 
@@ -31,6 +36,8 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       scores.add((counter, date));
       counter = 0;
+      widget.saveScores();
+      setState(() {});
     });
   }
   
