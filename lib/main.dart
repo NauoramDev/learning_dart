@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import './home_page.dart';
+import 'storage_services.dart';
 
 void main(){
   runApp(const MyApp());
@@ -15,6 +14,7 @@ class MyApp extends StatefulWidget{
   
 
 class _MyAppState extends State<MyApp>{
+  final StorageService _storageService = StorageService();
   bool isDark = false;
   List<(int,DateTime)> scores = [];
 
@@ -24,42 +24,32 @@ class _MyAppState extends State<MyApp>{
     });
   }
 
-@override
+@override // Méthode d'initialisation pour charger les scores au démarrage de l'application
 void initState(){
   super.initState();
   _loadScores();
 }
 
-
 Future<void> _loadScores() async {
-  final pref = await SharedPreferences.getInstance();
-  final String? scoreJson = pref.getString('scores');
-
-  if(scoreJson != null){ // Si des scores sont enregistrés
-    final List<dynamic> decodedList = jsonDecode(scoreJson);
-    scores = decodedList.map((item) {
-      final int value = item['value'];
-      final DateTime date = DateTime.parse(item['date']);
-      return (value, date);
-    }).toList();
-  }
-  setState(() {}); // Met à jour l'interface utilisateur après le chargement des scores
+  final raw = await _storageService.loadScore(); // Liste de Map (map = dico)
+  setState(() {
+    scores = raw
+    .map((m) => (m['score'] as int, DateTime.parse(m['date'] as String)))
+    .toList();
+  });
 }
 
 Future<void> _saveScores() async{
-  final pref = await SharedPreferences.getInstance();
-  final List<Map<String, dynamic>> scoreList = scores.map((entry) {
-    return {
-      'value': entry.$1,
-      'date': entry.$2.toIso8601String(),
-    };
-  }).toList();
-
-  final String scoreJson = jsonEncode(scoreList);
-  await pref.setString('scores', scoreJson);
+  final raw = scores
+  .map((e) => {
+    'score' : e.$1,
+    'date' : e.$2.toIso8601String(),
+  },)
+  .toList();
+  await _storageService.saveScores(raw);
 }
 
-@override
+@override // Méthode de construction de l'interface utilisateur
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Compteur',

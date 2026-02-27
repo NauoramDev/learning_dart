@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget{
     required this.isDark,
     required this.onToggleTheme,
     required this.saveScores,
-    required this.scores,
+    required this.scores, // liste de tuples (int, DateTime) représentant les scores et leurs dates associées
   });
   
 
@@ -26,19 +26,18 @@ class _HomePageState extends State<HomePage>{
   List<(int,DateTime)> scores = [];
 
   void incrementCounter(int value){
-    setState(() {
-      counter += value;
+    setState(() { // SetState est utilisé pour notifier Flutter que l'état de l'application a changé et que l'interface utilisateur doit être reconstruite pour refléter ces changements.
+      counter += value; 
     });
   }
 
   void addScore(){
-    DateTime date = DateTime.now();
+    final date = DateTime.now();
     setState(() {
-      scores.add((counter, date));
-      counter = 0;
-      widget.saveScores();
-      setState(() {});
+      scores.add((counter, date)); // Ajoute un nouveau score à la liste des scores
+      counter = 0; // Réinitialise le compteur à zéro après l'ajout du score
     });
+    widget.saveScores(); // Appelle la fonction de sauvegarde des scores pour enregistrer les scores mis à jour    
   }
   
 @override
@@ -61,16 +60,16 @@ class _HomePageState extends State<HomePage>{
           SizedBox(height: 15),
           Text('$counter', style: TextStyle(fontSize: 30)),
           SizedBox(height: 30),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Row est utilisé pour aligner les boutons horizontalement avec un espacement égal entre eux (spaceEvenly)
           children: [
             ElevatedButton(child: Text('+1'),
-            onPressed: ()=> incrementCounter(1),),
+            onPressed: () => incrementCounter(1),),
             ElevatedButton(child: Text('+5'),
-            onPressed: ()=> incrementCounter(5),),
+            onPressed: () => incrementCounter(5),),
             ElevatedButton(child: Text('-1'),
-            onPressed: ()=> incrementCounter(-1),),
+            onPressed: () => incrementCounter(-1),),
             ElevatedButton(child: Text('-5'),
-            onPressed: ()=> incrementCounter(-5),),
+            onPressed: () => incrementCounter(-5),),
           ],),
           SizedBox(height: 50),
           ElevatedButton(child: Text('Ajouter score'), onPressed: () => addScore())
