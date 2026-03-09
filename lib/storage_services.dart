@@ -7,6 +7,11 @@ class HystoryObject {
   final DateTime date;
 
   HystoryObject(this.score, this.date);
+
+  Map<String, dynamic> toJson() => {
+    'score': score,
+    'date': date.toIso8601String(),
+  };
 }
 
 
@@ -16,12 +21,12 @@ class StorageService {
 
   Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();
-    return File('$directory/$fileName');
+    return File('${directory.path}/$fileName');
   }
 
   Future<void> saveScores(List<HystoryObject> data) async {
     final file = await _getFile();
-    final jsonString = jsonEncode(data);
+    final jsonString = jsonEncode(data.map((e) => e.toJson()).toList());
     await file.writeAsString(jsonString);
   }
 

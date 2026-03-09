@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:learning_code/storage_services.dart';
 
 class SettingPage extends StatelessWidget {
   final bool isDark;
   final VoidCallback onToggleTheme;
-  final List<HystoryObject> scores;
+  final VoidCallback onClearScores;
 
   const SettingPage({
     super.key,
     required this.isDark,
     required this.onToggleTheme,
-    required this.scores,
+    required this.onClearScores,
   });
-
-  void clearScores() {
-    scores.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +30,7 @@ class SettingPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: clearScores,
+              onPressed: onClearScores,
               child: Text('Effacer l\'historique des scores')
             ),
           ],

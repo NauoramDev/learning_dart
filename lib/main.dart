@@ -38,6 +38,20 @@ Future<void> _loadScores() async {
 }
 
 // A modifier pour adapter les types
+Future<void> _addScore(HystoryObject entry) async {
+  setState(() {
+    scores.add(entry);
+  });
+  await _saveScores();
+}
+
+Future<void> _clearScores() async {
+  setState(() {
+    scores.clear();
+  });
+  await _saveScores();
+}
+
 Future<void> _saveScores() async{
   await _storageService.saveScores(scores); // Sauvegarde les scores à l'aide du service de stockage
 }
@@ -58,7 +72,8 @@ Future<void> _saveScores() async{
       home: HomePage(
         isDark: isDark,
         onToggleTheme: toggleTheme,
-        saveScores: _saveScores,
+        onAddScore: _addScore,
+        onClearScores: _clearScores,
         scores: scores,
       ),
     );

@@ -6,15 +6,17 @@ import './setting_page.dart';
 class HomePage extends StatefulWidget{
   final bool isDark;
   final VoidCallback onToggleTheme;
-  final Future<void> Function() saveScores;
+  final Future<void> Function(HystoryObject) onAddScore;
+  final VoidCallback onClearScores;
   final List<HystoryObject> scores;
 
   const HomePage({
     super.key,
     required this.isDark,
     required this.onToggleTheme,
-    required this.saveScores,
-    required this.scores, // liste de tuples (int, DateTime) représentant les scores et leurs dates associées
+    required this.onAddScore,
+    required this.onClearScores,
+    required this.scores,
   });
   
 
@@ -24,21 +26,19 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
   int counter = 0;
-  List<HystoryObject> scores = [];
 
   void incrementCounter(int value){
-    setState(() { // SetState est utilisé pour notifier Flutter que l'état de l'application a changé et que l'interface utilisateur doit être reconstruite pour refléter ces changements.
+    setState(() {
       counter += value; 
     });
   }
 
-  void addScore(){
+  Future<void> addScore() async {
     final date = DateTime.now();
+    await widget.onAddScore(HystoryObject(counter, date));
     setState(() {
-      scores.add(HystoryObject(counter, date)); // Ajoute un nouveau score à la liste des scores
-      counter = 0; // Réinitialise le compteur à zéro après l'ajout du score
+      counter = 0;
     });
-    widget.saveScores(); // Appelle la fonction de sauvegarde des scores pour enregistrer les scores mis à jour    
   }
   
 @override
@@ -83,11 +83,11 @@ class _HomePageState extends State<HomePage>{
           IconButton(onPressed: (){}, icon: Icon(Icons.home)),
           IconButton(onPressed:() {
             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HistoryPage(isDark: widget.isDark, scores: scores)));
+            MaterialPageRoute(builder: (context) => HistoryPage(isDark: widget.isDark, scores: widget.scores)));
           }, icon: Icon(Icons.menu)),
           IconButton(onPressed: (){
             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SettingPage(isDark: widget.isDark, onToggleTheme: widget.onToggleTheme, scores: scores)));
+            MaterialPageRoute(builder: (context) => SettingPage(isDark: widget.isDark, onToggleTheme: widget.onToggleTheme, onClearScores: widget.onClearScores)));
 
           }, icon: Icon(Icons.settings))
         ],),
