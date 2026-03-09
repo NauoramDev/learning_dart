@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_code/storage_services.dart';
 import './history_page.dart';
 import './setting_page.dart';
 
@@ -6,7 +7,7 @@ class HomePage extends StatefulWidget{
   final bool isDark;
   final VoidCallback onToggleTheme;
   final Future<void> Function() saveScores;
-  final List<(int, DateTime)> scores;
+  final List<HystoryObject> scores;
 
   const HomePage({
     super.key,
@@ -23,7 +24,7 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
   int counter = 0;
-  List<(int,DateTime)> scores = [];
+  List<HystoryObject> scores = [];
 
   void incrementCounter(int value){
     setState(() { // SetState est utilisé pour notifier Flutter que l'état de l'application a changé et que l'interface utilisateur doit être reconstruite pour refléter ces changements.
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage>{
   void addScore(){
     final date = DateTime.now();
     setState(() {
-      scores.add((counter, date)); // Ajoute un nouveau score à la liste des scores
+      scores.add(HystoryObject(counter, date)); // Ajoute un nouveau score à la liste des scores
       counter = 0; // Réinitialise le compteur à zéro après l'ajout du score
     });
     widget.saveScores(); // Appelle la fonction de sauvegarde des scores pour enregistrer les scores mis à jour    

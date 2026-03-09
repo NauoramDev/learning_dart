@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:learning_code/storage_services.dart';
 
 class SettingPage extends StatelessWidget {
   final bool isDark;
   final VoidCallback onToggleTheme;
-  final List<(int, DateTime)> scores;
+  final List<HystoryObject> scores;
 
   const SettingPage({
     super.key,

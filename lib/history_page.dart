@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:learning_code/storage_services.dart';
 
 
 class HistoryPage extends StatefulWidget {
   final bool isDark;
-  final List<(int, DateTime)> scores;
+  final List<HystoryObject> scores;
 
   const HistoryPage({
     super.key,
@@ -32,8 +33,8 @@ class _HistoryPageState extends State<HistoryPage> {
               itemBuilder: (context, index) {
                 final reversedIndex = widget.scores.length - 1 - index;
                 final entry = widget.scores[reversedIndex];
-                final value = entry.$1;
-                final date = entry.$2;
+                final value = entry.score;
+                final date = entry.date;
                 final hours = date.hour > 9 ? '${date.hour}' : '0${date.hour}';
                 final minutes = date.minute > 9 ? '${date.minute}' : '0${date.minute}';
                 String formattedDay =

@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget{
 class _MyAppState extends State<MyApp>{
   final StorageService _storageService = StorageService();
   bool isDark = false;
-  List<(int,DateTime)> scores = [];
+  List<HystoryObject> scores = [];
 
   void toggleTheme(){
     setState(() {
@@ -31,22 +31,15 @@ void initState(){
 }
 
 Future<void> _loadScores() async {
-  final raw = await _storageService.loadScore(); // Liste de Map (map = dico)
+  final raw = await _storageService.loadScore(); // Charge les scores à partir du service de stockage
   setState(() {
-    scores = raw
-    .map((m) => (m['score'] as int, DateTime.parse(m['date'] as String)))
-    .toList();
+    scores = raw; // Met à jour l'état avec les scores chargés
   });
 }
 
+// A modifier pour adapter les types
 Future<void> _saveScores() async{
-  final raw = scores
-  .map((e) => {
-    'score' : e.$1,
-    'date' : e.$2.toIso8601String(),
-  },)
-  .toList();
-  await _storageService.saveScores(raw);
+  await _storageService.saveScores(scores); // Sauvegarde les scores à l'aide du service de stockage
 }
 
 @override // Méthode de construction de l'interface utilisateur
