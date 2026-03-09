@@ -14,27 +14,19 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Paramètres'),
-        centerTitle: true,
-        backgroundColor:
-            isDark ? Colors.deepPurple : Colors.blueAccent,
-      ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: onToggleTheme,
-              child: Text(isDark ? 'Passer au mode clair' : 'Passer au mode sombre'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: onClearScores,
-              child: Text('Effacer l\'historique des scores')
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: onToggleTheme,
+            child: Text(isDark ? 'Passer au mode clair' : 'Passer au mode sombre'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: onClearScores,
+            child: Text('Effacer l\'historique des scores')
+          ),
+        ],
       ),
     );
   }

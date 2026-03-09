@@ -19,34 +19,26 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Historique des Scores'),
-        centerTitle: true,
-        backgroundColor:
-            widget.isDark ? Colors.deepPurple : Colors.blueAccent,
-      ),
-      body: widget.scores.isEmpty
-          ? Center(child: Text('Aucun score enregistré.'))
-          : ListView.builder(
-              itemCount: widget.scores.length,
-              itemBuilder: (context, index) {
-                final reversedIndex = widget.scores.length - 1 - index;
-                final entry = widget.scores[reversedIndex];
-                final value = entry.score;
-                final date = entry.date;
-                final hours = date.hour > 9 ? '${date.hour}' : '0${date.hour}';
-                final minutes = date.minute > 9 ? '${date.minute}' : '0${date.minute}';
-                String formattedDay =
-                    '${date.day}/${date.month}/${date.year} - $hours:$minutes';
+    return widget.scores.isEmpty
+        ? Center(child: Text('Aucun score enregistré.'))
+        : ListView.builder(
+            itemCount: widget.scores.length,
+            itemBuilder: (context, index) {
+              final reversedIndex = widget.scores.length - 1 - index;
+              final entry = widget.scores[reversedIndex];
+              final value = entry.score;
+              final date = entry.date;
+              final hours = date.hour > 9 ? '${date.hour}' : '0${date.hour}';
+              final minutes = date.minute > 9 ? '${date.minute}' : '0${date.minute}';
+              String formattedDay =
+                  '${date.day}/${date.month}/${date.year} - $hours:$minutes';
 
-                return ListTile(
-                  leading: Icon(Icons.arrow_forward),
-                  title: Text(formattedDay),
-                  subtitle: Text('$value'),
-                );
-              },
-            ),
-      );
+              return ListTile(
+                leading: Icon(Icons.arrow_forward),
+                title: Text(formattedDay),
+                subtitle: Text('$value'),
+              );
+            },
+          );
   }
 }
