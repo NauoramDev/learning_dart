@@ -47,5 +47,5 @@ app.*.map.json
 #Personal files
 /CHANGES.md
 /notes.md
-/lib/app1/**
-/lib/old_code/**
+/lib/app1/
+/lib/old_code/
